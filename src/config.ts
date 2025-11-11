@@ -17,7 +17,7 @@ export interface AppConfig {
 // Read from environment variables or use defaults
 export const config: AppConfig = {
     // Search engine configuration
-    defaultSearchEngine: (process.env.DEFAULT_SEARCH_ENGINE as AppConfig['defaultSearchEngine']) || 'bing',
+    defaultSearchEngine: (process.env.DEFAULT_SEARCH_ENGINE as AppConfig['defaultSearchEngine']) || 'duckduckgo',
     // Parse comma-separated list of allowed search engines
     allowedSearchEngines: process.env.ALLOWED_SEARCH_ENGINES ?
         process.env.ALLOWED_SEARCH_ENGINES.split(',').map(e => e.trim()) :
@@ -26,7 +26,7 @@ export const config: AppConfig = {
     proxyUrl: process.env.PROXY_URL || 'http://127.0.0.1:10809',
     useProxy: process.env.USE_PROXY === 'true',
     // CORS configuration
-    enableCors: process.env.ENABLE_CORS === 'true',
+    enableCors: process.env.ENABLE_CORS !== 'false',
     corsOrigin: process.env.CORS_ORIGIN || '*',
     // Server configuration - determined by MODE environment variable
     // Modes: 'both' (default), 'http', 'stdio'
@@ -38,8 +38,8 @@ const validSearchEngines = ['bing', 'duckduckgo', 'exa', 'brave', 'baidu', 'csdn
 
 // Validate default search engine
 if (!validSearchEngines.includes(config.defaultSearchEngine)) {
-    console.warn(`Invalid DEFAULT_SEARCH_ENGINE: "${config.defaultSearchEngine}", falling back to "bing"`);
-    config.defaultSearchEngine = 'bing';
+    console.warn(`Invalid DEFAULT_SEARCH_ENGINE: "${config.defaultSearchEngine}", falling back to "duckduckgo"`);
+    config.defaultSearchEngine = 'duckduckgo';
 }
 
 // Validate allowed search engines
